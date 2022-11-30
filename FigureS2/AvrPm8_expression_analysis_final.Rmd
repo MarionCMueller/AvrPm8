@@ -1,0 +1,194 @@
+---
+title: "AvrPm8_expression_analysis"
+author: "Marion Müller"
+date: "2022-10-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introductoin
+
+This document contains the code (bash & R) to conduct expression analysis of AvrPm8 in different powdery mildew strains
+
+## Data
+
+CDS of ISR_7
+
+## Software 
+
+R 
+salmon
+edgeR
+
+## Salmon index
+
+```
+salmon index -t $BLUMERIA/00.1.2.ISR_7/Bgt_ISR7_CDS_v1_4_1.fasta -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1
+```
+
+## Run salmon quant on all samples
+
+###  ISR_7 on Chinese Spring 2dpi
+
+```
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -1 $RNASEQRAWBLUMERIA/Isr7_A_1.fq.gz -2 $RNASEQRAWBLUMERIA/Isr7_A_2.fq.gz -p 4 -o ISR_7_rep1 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -1 $RNASEQRAWBLUMERIA/Isr7_B_1.fq.gz -2 $RNASEQRAWBLUMERIA/Isr7_B_2.fq.gz -p 4 -o ISR_7_rep2 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -1 $RNASEQRAWBLUMERIA/Isr7_C_1.fq.gz -2 $RNASEQRAWBLUMERIA/Isr7_C_2.fq.gz -p 4 -o ISR_7_rep3 ;
+```
+
+### GBR_JIW2 on Chinese Spring 2dpi
+
+```
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410414.fastq.gz  -p 4 -o GBR_JIW2_rep1 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410415.fastq.gz  -p 4 -o GBR_JIW2_rep2 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410416.fastq.gz  -p 4 -o GBR_JIW2_rep3 ;
+```
+
+### CHE_96224 on Chinese Spring 2dpi
+
+```
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410408.fastq.gz  -p 4 -o CHE_96224_rep1 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410409.fastq.gz  -p 4 -o CHE_96224_rep2 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410410.fastq.gz  -p 4 -o CHE_96224_rep3 ;
+```
+
+
+### CHE_94202 on Chinese Spring 2dpi
+
+```
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410411.fastq.gz  -p 4 -o CHE_94202_rep1 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410412.fastq.gz  -p 4 -o CHE_94202_rep2 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410413.fastq.gz  -p 4 -o CHE_94202_rep3 ;
+```
+
+### S-1391 on Matador 2dpi
+
+```
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410417.fastq.gz  -p 4 -o S_1391_rep1 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410418.fastq.gz  -p 4 -o S_1391_rep2 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410419.fastq.gz  -p 4 -o S_1391_rep3 ;
+```
+### S-1459 on Matador 2dpi
+
+```
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410420.fastq.gz  -p 4 -o S_1459_rep1 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410421.fastq.gz  -p 4 -o S_1459_rep2 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR6410422.fastq.gz  -p 4 -o S_1459_rep3 ;
+```
+
+### THUN-12 on Timbo 2dpi
+
+```
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR2517426.fastq.gz  -p 4 -o THUN12_Timbo_rep1 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR2517427.fastq.gz  -p 4 -o THUN12_Timbo_rep2 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR2517428.fastq.gz  -p 4 -o THUN12_Timbo_rep3 ;
+```
+
+### T3-8 on Timbo 2dpi
+
+```
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR2517435.fastq.gz  -p 4 -o T3_8_Timbo_rep1 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR2517436.fastq.gz  -p 4 -o T3_8_Timbo_rep2 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -r $RNASEQRAWBLUMERIA/SRR2517437.fastq.gz  -p 4 -o T3_8_Timbo_rep3 ;
+```
+
+### CHN_17-40 on Chinese Spring 2dpi
+
+```
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -1 $RNASEQRAWBLUMERIA/D_01_1.fq.gz -2 $RNASEQRAWBLUMERIA/D_01_2.fq.gz -p 4 -o CHN_17_40_rep1 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -1 $RNASEQRAWBLUMERIA/D_02_1.fq.gz -2 $RNASEQRAWBLUMERIA/D_02_2.fq.gz -p 4 -o CHN_17_40_rep2 ;
+salmon quant -i $SALMONINDEX/Index_Bgt_ISR7_CDS_v1_4_1 -l A -1 $RNASEQRAWBLUMERIA/D_03_1.fq.gz -2 $RNASEQRAWBLUMERIA/D_03_2.fq.gz -p 4 -o CHN_17_40_rep3 ;
+```
+
+## Relative quantification
+
+```
+for i in */ ; do cd $i ; cut -f5 quant.sf > count ; cd .. ; done
+paste */count | grep -v NumReads > AllCount ; 
+ls   | grep rep | sed -z s'/\n/\t/g' > Names ; %manually remove space after last entry
+cat Names AllCount > CountTable ;
+cut -f1,2 CHN_17_40_rep1/quant.sf  > GeneInfo ;
+paste GeneInfo CountTable > RNAseqSalmonCountonISR7.txt ;
+```
+
+## EdgeR analysis
+
+```{r libraries, echo=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(edgeR)
+library(reshape2)
+```
+
+### Load the data
+
+```{r dataload}
+counts<-read.table("RNAseqSalmonCountonISR7.txt",h=T, row.names=1)
+head(counts)
+count_sub <- counts[,c(2:28)]
+head(count_sub )
+gene_length <- counts[,c(1)]
+gene_length
+d <- DGEList(counts=count_sub,genes = gene_length)
+d <- calcNormFactors(d, method="TMM")
+rpkm<-rpkm(d,gene_length)
+head(rpkm)
+rpkm<-as.data.frame(rpkm)
+head(rpkm)
+```
+
+
+### AvrPm8
+
+Commands to select the AvrPm8 gene from the table:
+```{r}
+rpkm$Name<-row.names(rpkm)
+AvrPm8all<-rpkm %>% filter(Name=="BgISR7-10067")
+AvrPm8<-melt(AvrPm8all) %>% separate(variable, c('Isolate', 'Rep'),sep="_rep")
+AvrPm8
+```
+
+
+Plot AvrPm8 rpkm values for all publish isolates isolates. For THUN-12 and T3-8, the replicates on cultivar Timbo were selected
+```{r}
+AvrPm8allpub<-AvrPm8all %>% select(ISR_7_rep1,ISR_7_rep2,ISR_7_rep3,CHE_96224_rep1,CHE_96224_rep2,CHE_96224_rep3,CHE_94202_rep1,CHE_94202_rep2,CHE_94202_rep3,GBR_JIW2_rep1,GBR_JIW2_rep2,GBR_JIW2_rep3,CHN_17_40_rep1,CHN_17_40_rep2,CHN_17_40_rep3,THUN12_Timbo_rep1,THUN12_Timbo_rep2,THUN12_Timbo_rep3,T3_8_Timbo_rep1,T3_8_Timbo_rep2,T3_8_Timbo_rep3,S_1459_rep1,S_1459_rep2,S_1459_rep3,S_1391_rep1,S_1391_rep2,S_1391_rep3)
+AvrPm8pub<-melt(AvrPm8allpub) %>% separate(variable, c('Isolate', 'Rep'),sep="_rep")
+AvrPm8pub
+```
+
+
+## Final Figure for publication
+
+```{r, out.width="100%", echo=FALSE}
+AvrPm8pub<-subset(AvrPm8pub, Isolate %in% c("ISR_7","CHE_96224","CHE_94202","CHN_17_40","THUN12_Timbo","T3_8_Timbo","S_1391","S_1459"))
+ggplot2AvrPm8_publog2<-ggplot(AvrPm8pub, aes(x=factor(Isolate,c("ISR_7","CHE_96224","CHE_94202","CHN_17_40","THUN12_Timbo","T3_8_Timbo","S_1391","S_1459")),y=log2(value))) + geom_boxplot(fill="white") + geom_jitter(width=0.2,size=2,fill="gold1",color="black",shape=21,set.seed(3)) +ylab("rpkm") +xlab("Isolate") + ylim(0,12) + scale_x_discrete(labels=c("ISR_7","CHE_96224","CHE_94202","CHN_17_40","THUN-12","T3-8","S-1391","S-1459")) +
+  theme_bw() + ylab("log2(rpkm)")  + theme(axis.text=element_text(size=12),axis.title=element_text(size=16))
+ggplot2AvrPm8_publog2
+pdf("AvrPm8_publishedlog2.pdf",width=10, height=4)
+ggplot2AvrPm8_publog2
+dev.off()
+``` 
+
+## GBR_JIW2
+
+```{r, out.width="100%", echo=FALSE}
+AvrPm8_JIW2<-subset(AvrPm8, Isolate %in% c("ISR_7","GBR_JIW2"))
+AvrPm8_JIW2
+ggplot2AvrPm8_JIW2publog2<-ggplot(AvrPm8_JIW2, aes(x=factor(Isolate,c("ISR_7","GBR_JIW2")),y=log2(value))) + geom_boxplot(fill="white") + geom_jitter(width=0.2,size=2,fill="gold1",color="black",shape=21,set.seed(3)) +ylab("rpkm") +xlab("Isolate") + ylim(0,12) + scale_x_discrete(labels=c("ISR_7","GBR_JIW2")) +
+  theme_bw() + ylab("log2(rpkm)") + theme(axis.text=element_text(size=12),axis.title=element_text(size=16))
+ggplot2AvrPm8_JIW2publog2
+pdf("AvrPm8_JIW2publishedlog2.pdf",width=3, height=4)
+ggplot2AvrPm8_JIW2publog2
+dev.off()
+``` 
+
+
+
+`
+
+
+
